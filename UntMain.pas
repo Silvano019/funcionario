@@ -62,7 +62,7 @@ begin
     begin
       Connection:= Dtm.conexao;
       Close;
-      Sql.Add('Update dependentes d set d.ativo = ''Não'' where  d.id_reponsavel = :id_reponsavel');
+      Sql.Add('Update dependentes set ativo = ''Não'' where id_reponsavel = :id_reponsavel');
       ParamByname('id_reponsavel').AsInteger:= AIdResponsavel; 
     end;
     QryExcluir.ExecSQL;
@@ -89,7 +89,7 @@ begin
     begin
       Connection:= Dtm.conexao;
       Close;
-      Sql.Add('Update funcionarios set f.ativo = ''Não'' where  f.id_funcionario = :id_funcionario');
+      Sql.Add('Update funcionarios set ativo = ''Não'' where id_funcionario = :id_funcionario');
       ParamByname('id_funcionario').AsInteger:= AIdFuncionario; 
     end;
     QryExcluir.ExecSQL;
@@ -133,7 +133,7 @@ begin
  begin
    screen.Cursor:= crHourGlass;
    excluirDependentes(QryDadosid_funcionario.AsInteger);
-   excluirDependentes(QryDadosid_funcionario.AsInteger);
+   excluirFuncionario(QryDadosid_funcionario.AsInteger);
    QryDados.Refresh;
    screen.Cursor:= crDefault;
 
