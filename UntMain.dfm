@@ -473,6 +473,7 @@ object FrmMain: TFrmMain
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentShowHint = False
     ShowHint = True
+    OnClick = sb_excluirClick
   end
   object SpeedButton3: TSpeedButton
     Left = 1002

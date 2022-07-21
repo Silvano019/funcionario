@@ -34,8 +34,10 @@ type
     procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure sb_adicionarClick(Sender: TObject);
+    procedure sb_excluirClick(Sender: TObject);
   private
-    { Private declarations }
+    procedure excluirDependentes(AIdResponsavel: integer);
+    procedure excluirFuncionario(AIdFuncionario: integer);
   public
     { Public declarations }
   end;
@@ -48,6 +50,60 @@ implementation
 {$R *.dfm}
  uses
    untDtm, UntFuncionario;
+procedure TFrmMain.excluirDependentes(AIdResponsavel: integer);
+var
+  QryExcluir: TFDQuery;
+begin
+  QryExcluir := TFDQuery.Create(nil);
+  Dtm.conexao.StartTransaction;
+  try
+  begin
+    with QryExcluir do
+    begin
+      Connection:= Dtm.conexao;
+      Close;
+      Sql.Add('Update dependentes d set d.ativo = ''Não'' where  d.id_reponsavel = :id_reponsavel');
+      ParamByname('id_reponsavel').AsInteger:= AIdResponsavel; 
+    end;
+    QryExcluir.ExecSQL;
+    Dtm.conexao.Commit;
+    QryExcluir.Free;
+  end;
+  except on E : Exception do
+  begin
+    Dtm.conexao.Rollback;
+    ShowMessage(E.ClassName+' gerou a seguinte mensagem de erro: '+E.Message);
+  end;
+ end;
+end;
+
+procedure TFrmMain.excluirFuncionario(AIdFuncionario: integer);
+var
+  QryExcluir: TFDQuery;
+begin
+  QryExcluir := TFDQuery.Create(nil);
+  Dtm.conexao.StartTransaction;
+  try
+  begin
+    with QryExcluir do
+    begin
+      Connection:= Dtm.conexao;
+      Close;
+      Sql.Add('Update funcionarios set f.ativo = ''Não'' where  f.id_funcionario = :id_funcionario');
+      ParamByname('id_funcionario').AsInteger:= AIdFuncionario; 
+    end;
+    QryExcluir.ExecSQL;
+    Dtm.conexao.Commit;
+    QryExcluir.Free;
+  end;
+  except on E : Exception do
+  begin
+    Dtm.conexao.Rollback;
+    ShowMessage(E.ClassName+' gerou a seguinte mensagem de erro: '+E.Message);
+  end;
+ end;
+end;
+
 procedure TFrmMain.FormShow(Sender: TObject);
 begin
   with QryDados do
@@ -69,6 +125,19 @@ begin
   screen.Cursor:= crHourGlass;
   QryDados.Refresh;
   screen.Cursor:= crDefault;
+end;
+
+procedure TFrmMain.sb_excluirClick(Sender: TObject);
+begin
+ if Application.MessageBox('Tem certeza que deseja excluir este cadastro?', 'Alerta',MB_ICONQUESTION + MB_YESNO + MB_SYSTEMMODAL) = mrYes then
+ begin
+   screen.Cursor:= crHourGlass;
+   excluirDependentes(QryDadosid_funcionario.AsInteger);
+   excluirDependentes(QryDadosid_funcionario.AsInteger);
+   QryDados.Refresh;
+   screen.Cursor:= crDefault;
+
+ end;
 end;
 
 procedure TFrmMain.SpeedButton1Click(Sender: TObject);
