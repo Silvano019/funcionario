@@ -9,7 +9,7 @@ uses
   FireDAC.Phys.PG, FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, FireDAC.Comp.Client;
 
 type
-  TDtmConexao = class(TDataModule)
+  TDtm = class(TDataModule)
     conexao: TFDConnection;
     FDPhysPgDriverLink1: TFDPhysPgDriverLink;
   private
@@ -19,7 +19,7 @@ type
   end;
 
 var
-  DtmConexao: TDtmConexao;
+  Dtm: TDtm;
 
 implementation
 

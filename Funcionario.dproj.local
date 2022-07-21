@@ -2,11 +2,14 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2022/07/19 19:49:28.000.689,=C:\Users\consultorio\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2022/07/19 19:54:21.000.259,C:\Users\consultorio\Documents\Embarcadero\Studio\Projects\Unit1.pas=D:\Teste_WLE\UntMain.pas</Transaction>
-    <Transaction>2022/07/19 19:54:21.000.259,C:\Users\consultorio\Documents\Embarcadero\Studio\Projects\Unit1.dfm=D:\Teste_WLE\UntMain.dfm</Transaction>
-    <Transaction>2022/07/19 19:54:30.000.172,C:\Users\consultorio\Documents\Embarcadero\Studio\Projects\Project1.dproj=D:\Teste_WLE\Funcionario.dproj</Transaction>
+    <Transaction>2022/07/19 19:54:21.000.259,D:\Teste_WLE\UntMain.pas=C:\Users\consultorio\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/07/19 19:54:21.000.259,D:\Teste_WLE\UntMain.dfm=C:\Users\consultorio\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2022/07/19 19:54:30.000.172,D:\Teste_WLE\Funcionario.dproj=C:\Users\consultorio\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2022/07/19 20:12:22.000.896,=D:\Teste_WLE\Unit1.pas</Transaction>
-    <Transaction>2022/07/19 20:15:17.000.466,D:\Teste_WLE\UntDtm.pas=D:\Teste_WLE\Unit1.pas</Transaction>
-    <Transaction>2022/07/19 20:15:17.000.466,D:\Teste_WLE\UntDtm.dfm=D:\Teste_WLE\Unit1.dfm</Transaction>
+    <Transaction>2022/07/19 20:15:17.000.466,D:\Teste_WLE\Unit1.dfm=D:\Teste_WLE\UntDtm.dfm</Transaction>
+    <Transaction>2022/07/19 20:15:17.000.466,D:\Teste_WLE\Unit1.pas=D:\Teste_WLE\UntDtm.pas</Transaction>
+    <Transaction>2022/07/20 20:39:17.783,=C:\Users\consultorio\Desktop\Teste_WLE\Unit1.pas</Transaction>
+    <Transaction>2022/07/20 20:39:47.207,C:\Users\consultorio\Desktop\Teste_WLE\UntFuncionario.dfm=C:\Users\consultorio\Desktop\Teste_WLE\Unit1.dfm</Transaction>
+    <Transaction>2022/07/20 20:39:47.207,C:\Users\consultorio\Desktop\Teste_WLE\UntFuncionario.pas=C:\Users\consultorio\Desktop\Teste_WLE\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>
