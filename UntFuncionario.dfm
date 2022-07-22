@@ -68,9 +68,9 @@ object FrmFuncionario: TFrmFuncionario
     ParentFont = False
   end
   object SpeedButton1: TSpeedButton
-    Left = 273
+    Left = 288
     Top = 232
-    Width = 73
+    Width = 58
     Height = 59
     Glyph.Data = {
       361B0000424D361B000000000000360000002800000030000000300000000100
@@ -296,7 +296,7 @@ object FrmFuncionario: TFrmFuncionario
   object SpeedButton2: TSpeedButton
     Left = 8
     Top = 232
-    Width = 73
+    Width = 58
     Height = 59
     Glyph.Data = {
       361B0000424D361B000000000000360000002800000030000000300000000100

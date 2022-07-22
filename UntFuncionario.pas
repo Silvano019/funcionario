@@ -35,7 +35,7 @@ type
     procedure SpeedButton2Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
   private
-    procedure validarCampos;
+
   public
     procedure setFuncionario(AId_funcionario: integer);
     procedure addFuncionario;
@@ -110,13 +110,6 @@ begin
  begin
    Close;
  end;
-end;
-
-procedure TFrmFuncionario.validarCampos;
-Var
-  validos: boolean;
-begin
-
 end;
 
 end.

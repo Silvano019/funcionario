@@ -14,9 +14,6 @@ uses
 type
   TFrmMain = class(TForm)
     DBGrid1: TDBGrid;
-    PopupMenu: TPopupMenu;
-    Adicionar1: TMenuItem;
-    ALterar1: TMenuItem;
     QryDados: TFDQuery;
     DscDados: TDataSource;
     QryDadosid_funcionario: TIntegerField;
@@ -26,18 +23,21 @@ type
     QryDadosestado: TWideStringField;
     QryDadosativo: TWideStringField;
     sb_adicionar: TSpeedButton;
-    N1: TMenuItem;
-    Verdependentes1: TMenuItem;
     sb_excluir: TSpeedButton;
     SpeedButton3: TSpeedButton;
     sb_editar: TSpeedButton;
+    sp_exporta_todos: TSpeedButton;
+    SpeedButton2: TSpeedButton;
+    SpeedButton5: TSpeedButton;
+    SaveDialog1: TSaveDialog;
     procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure sb_adicionarClick(Sender: TObject);
     procedure sb_excluirClick(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+    procedure sp_exporta_todosClick(Sender: TObject);
   private
-    procedure excluirDependentes(AIdResponsavel: integer);
-    procedure excluirFuncionario(AIdFuncionario: integer);
+
   public
     { Public declarations }
   end;
@@ -49,60 +49,7 @@ implementation
 
 {$R *.dfm}
  uses
-   untDtm, UntFuncionario;
-procedure TFrmMain.excluirDependentes(AIdResponsavel: integer);
-var
-  QryExcluir: TFDQuery;
-begin
-  QryExcluir := TFDQuery.Create(nil);
-  Dtm.conexao.StartTransaction;
-  try
-  begin
-    with QryExcluir do
-    begin
-      Connection:= Dtm.conexao;
-      Close;
-      Sql.Add('Update dependentes set ativo = ''Não'' where id_reponsavel = :id_reponsavel');
-      ParamByname('id_reponsavel').AsInteger:= AIdResponsavel; 
-    end;
-    QryExcluir.ExecSQL;
-    Dtm.conexao.Commit;
-    QryExcluir.Free;
-  end;
-  except on E : Exception do
-  begin
-    Dtm.conexao.Rollback;
-    ShowMessage(E.ClassName+' gerou a seguinte mensagem de erro: '+E.Message);
-  end;
- end;
-end;
-
-procedure TFrmMain.excluirFuncionario(AIdFuncionario: integer);
-var
-  QryExcluir: TFDQuery;
-begin
-  QryExcluir := TFDQuery.Create(nil);
-  Dtm.conexao.StartTransaction;
-  try
-  begin
-    with QryExcluir do
-    begin
-      Connection:= Dtm.conexao;
-      Close;
-      Sql.Add('Update funcionarios set ativo = ''Não'' where id_funcionario = :id_funcionario');
-      ParamByname('id_funcionario').AsInteger:= AIdFuncionario; 
-    end;
-    QryExcluir.ExecSQL;
-    Dtm.conexao.Commit;
-    QryExcluir.Free;
-  end;
-  except on E : Exception do
-  begin
-    Dtm.conexao.Rollback;
-    ShowMessage(E.ClassName+' gerou a seguinte mensagem de erro: '+E.Message);
-  end;
- end;
-end;
+   untDtm, UntFuncionario, UntDependente, UntUtil;
 
 procedure TFrmMain.FormShow(Sender: TObject);
 begin
@@ -128,15 +75,17 @@ begin
 end;
 
 procedure TFrmMain.sb_excluirClick(Sender: TObject);
+var
+  LMessage: String;
 begin
- if Application.MessageBox('Tem certeza que deseja excluir este cadastro?', 'Alerta',MB_ICONQUESTION + MB_YESNO + MB_SYSTEMMODAL) = mrYes then
+  LMessage:= 'Tem certeza que deseja excluir ' + QryDadosnome.AsString+ '?';
+ if Application.MessageBox(PChar(LMessage), 'Alerta',MB_ICONQUESTION + MB_YESNO + MB_SYSTEMMODAL) = mrYes then
  begin
    screen.Cursor:= crHourGlass;
-   excluirDependentes(QryDadosid_funcionario.AsInteger);
-   excluirFuncionario(QryDadosid_funcionario.AsInteger);
+   TUtil.excluirDependentes(QryDadosid_funcionario.AsInteger);
+   TUtil.excluirFuncionario(QryDadosid_funcionario.AsInteger);
    QryDados.Refresh;
    screen.Cursor:= crDefault;
-
  end;
 end;
 
@@ -152,6 +101,55 @@ begin
   screen.Cursor:= crHourGlass;
   QryDados.Refresh;
   screen.Cursor:= crDefault;
+
+end;
+
+procedure TFrmMain.SpeedButton3Click(Sender: TObject);
+begin
+   FrmDependentes:= TFrmDependentes.create(nil);
+  try
+    FrmDependentes.getDependente(QryDadosid_funcionario.AsInteger);
+    FrmDependentes.ShowModal;
+  finally
+    FrmFuncionario.Free;
+  end;
+end;
+
+procedure TFrmMain.sp_exporta_todosClick(Sender: TObject);
+var
+  LConteudoArquivo: TextFile;
+   I: integer;
+   LId: String;
+begin
+  if SaveDialog1.Execute then
+  begin
+    if FileExists(SaveDialog1.FileName) then
+    begin
+      raise Exception.Create('Arquivo já existente.');
+    end
+    else
+    begin
+      AssignFile(LConteudoArquivo, SaveDialog1.FileName);
+      Rewrite(LConteudoArquivo);
+      QryDados.First;
+      Writeln(LConteudoArquivo,'+-- Lista de Funcionário --+');
+      I:= 0;
+      while not QryDados.Eof do
+      begin
+//        Writeln(LConteudoArquivo, intTostr(I));
+//        I:= I+1;
+        Writeln(LConteudoArquivo,'----------------------------');
+        Writeln(LConteudoArquivo, ' Cod. Funcionário: ' + inttostr(QryDadosid_funcionario.AsInteger));
+        Writeln(LConteudoArquivo, ' Nome: ' + QryDadosnome.AsString);
+        Writeln(LConteudoArquivo, ' Endereço: ' + QryDadosendereco.AsString);
+        Writeln(LConteudoArquivo, ' Cidade:  ' + QryDadoscidade.AsString + '-' + QryDadosestado.AsString);
+        Writeln(LConteudoArquivo,'----------------------------');
+        QryDados.Next;
+      end;
+      CloseFile(LConteudoArquivo);
+    end;
+
+  end;
 
 end;
 
