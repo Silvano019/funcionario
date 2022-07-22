@@ -930,6 +930,7 @@ object FrmDependentes: TFrmDependentes
     ParentShowHint = False
     ShowHint = True
     Visible = False
+    OnClick = sb_exportaClick
   end
   object DBGrid1: TDBGrid
     Left = 8
@@ -1001,5 +1002,11 @@ object FrmDependentes: TFrmDependentes
     DataSet = QryDependentes
     Left = 136
     Top = 152
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = 'txt'
+    Filter = 'Arquivo de texto|*.txt'
+    Left = 243
+    Top = 104
   end
 end

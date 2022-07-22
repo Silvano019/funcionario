@@ -27,7 +27,7 @@ type
     SpeedButton3: TSpeedButton;
     sb_editar: TSpeedButton;
     sp_exporta_todos: TSpeedButton;
-    SpeedButton2: TSpeedButton;
+    sp_exportar_selecionado: TSpeedButton;
     SpeedButton5: TSpeedButton;
     SaveDialog1: TSaveDialog;
     procedure FormShow(Sender: TObject);
@@ -36,6 +36,7 @@ type
     procedure sb_excluirClick(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
     procedure sp_exporta_todosClick(Sender: TObject);
+    procedure sp_exportar_selecionadoClick(Sender: TObject);
   private
 
   public
@@ -115,11 +116,36 @@ begin
   end;
 end;
 
+procedure TFrmMain.sp_exportar_selecionadoClick(Sender: TObject);
+var
+  LConteudoArquivo: TextFile;
+begin
+  if SaveDialog1.Execute then
+  begin
+    if FileExists(SaveDialog1.FileName) then
+    begin
+      raise Exception.Create('Arquivo já existente.');
+    end
+    else
+    begin
+      AssignFile(LConteudoArquivo, SaveDialog1.FileName);
+      Rewrite(LConteudoArquivo);
+      Writeln(LConteudoArquivo,'+-- Lista de Funcionário --+');
+      Writeln(LConteudoArquivo,'----------------------------');
+      Writeln(LConteudoArquivo, ' Cod. Funcionário: ' + inttostr(QryDadosid_funcionario.AsInteger));
+      Writeln(LConteudoArquivo, ' Nome: ' + QryDadosnome.AsString);
+      Writeln(LConteudoArquivo, ' Endereço: ' + QryDadosendereco.AsString);
+      Writeln(LConteudoArquivo, ' Cidade:  ' + QryDadoscidade.AsString + '-' + QryDadosestado.AsString);
+      Writeln(LConteudoArquivo,'----------------------------');
+      CloseFile(LConteudoArquivo);
+    end;
+  end;
+
+end;
+
 procedure TFrmMain.sp_exporta_todosClick(Sender: TObject);
 var
   LConteudoArquivo: TextFile;
-   I: integer;
-   LId: String;
 begin
   if SaveDialog1.Execute then
   begin
@@ -133,11 +159,8 @@ begin
       Rewrite(LConteudoArquivo);
       QryDados.First;
       Writeln(LConteudoArquivo,'+-- Lista de Funcionário --+');
-      I:= 0;
       while not QryDados.Eof do
       begin
-//        Writeln(LConteudoArquivo, intTostr(I));
-//        I:= I+1;
         Writeln(LConteudoArquivo,'----------------------------');
         Writeln(LConteudoArquivo, ' Cod. Funcionário: ' + inttostr(QryDadosid_funcionario.AsInteger));
         Writeln(LConteudoArquivo, ' Nome: ' + QryDadosnome.AsString);
@@ -148,7 +171,6 @@ begin
       end;
       CloseFile(LConteudoArquivo);
     end;
-
   end;
 
 end;

@@ -1164,7 +1164,7 @@ object FrmMain: TFrmMain
     ShowHint = True
     OnClick = sp_exporta_todosClick
   end
-  object SpeedButton2: TSpeedButton
+  object sp_exportar_selecionado: TSpeedButton
     Left = 1031
     Top = 283
     Width = 73
@@ -1391,6 +1391,7 @@ object FrmMain: TFrmMain
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentShowHint = False
     ShowHint = True
+    OnClick = sp_exportar_selecionadoClick
   end
   object SpeedButton5: TSpeedButton
     Left = 1031

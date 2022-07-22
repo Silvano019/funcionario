@@ -21,13 +21,16 @@ type
     SpeedButton1: TSpeedButton;
     sb_excluir: TSpeedButton;
     sb_exporta: TSpeedButton;
+    SaveDialog1: TSaveDialog;
     procedure sb_excluirClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure sb_editarClick(Sender: TObject);
+    procedure sb_exportaClick(Sender: TObject);
   private
     var
       FResponsavel: integer;
       procedure atualizaerTela;
+      function nomeResponsavel: String;
     { Private declarations }
   public
     { Public declarations }
@@ -72,6 +75,26 @@ begin
   atualizaerTela;
 end;
 
+function TFrmDependentes.nomeResponsavel: String;
+var
+  LQryResponsavel: TFDQuery;
+begin
+  LQryResponsavel := TFDQuery.Create(nil);
+  try
+     with LQryResponsavel do
+     begin
+       Connection:= Dtm.conexao;
+       Close;
+       Sql.Add('Select nome from funcionarios where id_funcionario = :id_funcionario');
+       ParamByName('id_funcionario').AsInteger:= FResponsavel;
+       Open;
+       Result:= Fields[0].AsString;
+     end;
+  finally
+    LQryResponsavel.Free;
+  end;
+end;
+
 procedure TFrmDependentes.SpeedButton1Click(Sender: TObject);
 begin
    FrmManDependente:= TFrmManDependente.create(nil);
@@ -96,6 +119,36 @@ begin
     QryDependentes.Refresh;
     atualizaerTela;
   end;
+end;
+
+procedure TFrmDependentes.sb_exportaClick(Sender: TObject);
+var
+  LConteudoArquivo: TextFile;
+begin
+  if SaveDialog1.Execute then
+  begin
+    if FileExists(SaveDialog1.FileName) then
+    begin
+      raise Exception.Create('Arquivo já existente.');
+    end
+    else
+    begin
+      AssignFile(LConteudoArquivo, SaveDialog1.FileName);
+      Rewrite(LConteudoArquivo);
+      QryDependentes.First;
+      Writeln(LConteudoArquivo,'+-- Lista de Dependente de: ' + nomeResponsavel + ' --+');
+      Writeln(LConteudoArquivo,'----------------------------');
+      while not QryDependentes.Eof do
+      begin
+        Writeln(LConteudoArquivo,'');
+        Writeln(LConteudoArquivo, ' Nome: ' + QryDependentesnome.AsString);
+        QryDependentes.Next;
+      end;
+      Writeln(LConteudoArquivo,'----------------------------');
+      CloseFile(LConteudoArquivo);
+    end;
+  end;
+
 end;
 
 procedure TFrmDependentes.sb_editarClick(Sender: TObject);
