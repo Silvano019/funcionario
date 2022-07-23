@@ -569,8 +569,11 @@ object FrmFuncionario: TFrmFuncionario
     Top = 149
     Width = 274
     Height = 22
+    AutoDropDown = True
+    CharCase = ecUpperCase
     DataField = 'estado'
     DataSource = DscFuncionario
+    ImeName = 'Portuguese (Brazilian ABNT)'
     Items.Strings = (
       'AC'
       'AL'

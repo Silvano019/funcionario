@@ -477,7 +477,7 @@ object FrmMain: TFrmMain
     ShowHint = True
     OnClick = sb_excluirClick
   end
-  object SpeedButton3: TSpeedButton
+  object sb_exportar_todos: TSpeedButton
     Left = 1031
     Top = 8
     Width = 73
@@ -704,7 +704,7 @@ object FrmMain: TFrmMain
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentShowHint = False
     ShowHint = True
-    OnClick = SpeedButton3Click
+    OnClick = sb_exportar_todosClick
   end
   object sb_editar: TSpeedButton
     Left = 1031
@@ -935,7 +935,7 @@ object FrmMain: TFrmMain
     ShowHint = True
     OnClick = SpeedButton1Click
   end
-  object sp_exporta_todos: TSpeedButton
+  object sb_exporta_todos: TSpeedButton
     Left = 1031
     Top = 63
     Width = 73
@@ -1162,9 +1162,9 @@ object FrmMain: TFrmMain
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentShowHint = False
     ShowHint = True
-    OnClick = sp_exporta_todosClick
+    OnClick = sb_exporta_todosClick
   end
-  object sp_exportar_selecionado: TSpeedButton
+  object sb_exportar_selecionado: TSpeedButton
     Left = 1031
     Top = 283
     Width = 73
@@ -1391,9 +1391,9 @@ object FrmMain: TFrmMain
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentShowHint = False
     ShowHint = True
-    OnClick = sp_exportar_selecionadoClick
+    OnClick = sb_exportar_selecionadoClick
   end
-  object sp_sorteador: TSpeedButton
+  object sb_sorteador: TSpeedButton
     Left = 1031
     Top = 338
     Width = 73
@@ -1788,7 +1788,7 @@ object FrmMain: TFrmMain
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentShowHint = False
     ShowHint = True
-    OnClick = sp_sorteadorClick
+    OnClick = sb_sorteadorClick
   end
   object DbgDados: TDBGrid
     Left = 8

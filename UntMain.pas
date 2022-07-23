@@ -24,21 +24,20 @@ type
     QryDadosativo: TWideStringField;
     sb_adicionar: TSpeedButton;
     sb_excluir: TSpeedButton;
-    SpeedButton3: TSpeedButton;
+    sb_exportar_todos: TSpeedButton;
     sb_editar: TSpeedButton;
-    sp_exporta_todos: TSpeedButton;
-    sp_exportar_selecionado: TSpeedButton;
-    sp_sorteador: TSpeedButton;
+    sb_exporta_todos: TSpeedButton;
+    sb_exportar_selecionado: TSpeedButton;
+    sb_sorteador: TSpeedButton;
     SaveDialog1: TSaveDialog;
     procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure sb_adicionarClick(Sender: TObject);
     procedure sb_excluirClick(Sender: TObject);
-    procedure SpeedButton3Click(Sender: TObject);
-    procedure sp_exporta_todosClick(Sender: TObject);
-    procedure sp_exportar_selecionadoClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure sp_sorteadorClick(Sender: TObject);
+    procedure sb_exportar_todosClick(Sender: TObject);
+    procedure sb_exporta_todosClick(Sender: TObject);
+    procedure sb_exportar_selecionadoClick(Sender: TObject);
+    procedure sb_sorteadorClick(Sender: TObject);
   private
     function maiorIdFuncionario: Integer;
     function validarGanhador(AIdGanhador: integer): String;
@@ -54,19 +53,6 @@ implementation
 {$R *.dfm}
  uses
    untDtm, UntFuncionario, UntDependente, UntUtil;
-
-procedure TFrmMain.Button1Click(Sender: TObject);
-begin
-  with QryDados do
-  begin
-    First;
-    while not eof do
-    begin
-      Next;
-    end;
-  end;
-
-end;
 
 procedure TFrmMain.FormShow(Sender: TObject);
 begin
@@ -112,11 +98,8 @@ begin
 end;
 
 procedure TFrmMain.sb_excluirClick(Sender: TObject);
-var
-  LMessage: String;
 begin
-  LMessage:= 'Tem certeza que deseja excluir ' + QryDadosnome.AsString+ '?';
- if Application.MessageBox(PChar(LMessage), 'Alerta',MB_ICONQUESTION + MB_YESNO + MB_SYSTEMMODAL) = mrYes then
+ if Application.MessageBox(PChar('Tem certeza que deseja excluir ' + QryDadosnome.AsString+ '?'), 'Alerta',MB_ICONQUESTION + MB_YESNO + MB_SYSTEMMODAL) = mrYes then
  begin
    screen.Cursor:= crHourGlass;
    TUtil.excluirDependentes(QryDadosid_funcionario.AsInteger);
@@ -141,7 +124,7 @@ begin
 
 end;
 
-procedure TFrmMain.SpeedButton3Click(Sender: TObject);
+procedure TFrmMain.sb_exportar_todosClick(Sender: TObject);
 begin
    FrmDependentes:= TFrmDependentes.create(nil);
   try
@@ -152,7 +135,7 @@ begin
   end;
 end;
 
-procedure TFrmMain.sp_exportar_selecionadoClick(Sender: TObject);
+procedure TFrmMain.sb_exportar_selecionadoClick(Sender: TObject);
 var
   LConteudoArquivo: TextFile;
 begin
@@ -179,7 +162,7 @@ begin
 
 end;
 
-procedure TFrmMain.sp_exporta_todosClick(Sender: TObject);
+procedure TFrmMain.sb_exporta_todosClick(Sender: TObject);
 var
   LConteudoArquivo: TextFile;
 begin
@@ -211,7 +194,7 @@ begin
 
 end;
 
-procedure TFrmMain.sp_sorteadorClick(Sender: TObject);
+procedure TFrmMain.sb_sorteadorClick(Sender: TObject);
 var
   LIdGanhador: integer;
   LNomeGanhador: string;

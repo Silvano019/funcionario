@@ -243,7 +243,7 @@ object FrmDependentes: TFrmDependentes
     Visible = False
     OnClick = sb_editarClick
   end
-  object SpeedButton1: TSpeedButton
+  object sb_add: TSpeedButton
     Left = 343
     Top = 8
     Width = 73
@@ -470,7 +470,7 @@ object FrmDependentes: TFrmDependentes
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentShowHint = False
     ShowHint = True
-    OnClick = SpeedButton1Click
+    OnClick = sb_addClick
   end
   object sb_excluir: TSpeedButton
     Left = 343

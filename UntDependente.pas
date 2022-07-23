@@ -18,12 +18,12 @@ type
     QryDependentesid_dependente: TIntegerField;
     QryDependentesnome: TWideStringField;
     QryDependentesid_reponsavel: TIntegerField;
-    SpeedButton1: TSpeedButton;
+    sb_add: TSpeedButton;
     sb_excluir: TSpeedButton;
     sb_exporta: TSpeedButton;
     SaveDialog1: TSaveDialog;
     procedure sb_excluirClick(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
+    procedure sb_addClick(Sender: TObject);
     procedure sb_editarClick(Sender: TObject);
     procedure sb_exportaClick(Sender: TObject);
   private
@@ -95,7 +95,7 @@ begin
   end;
 end;
 
-procedure TFrmDependentes.SpeedButton1Click(Sender: TObject);
+procedure TFrmDependentes.sb_addClick(Sender: TObject);
 begin
    FrmManDependente:= TFrmManDependente.create(nil);
   try
@@ -109,11 +109,8 @@ begin
 end;
 
 procedure TFrmDependentes.sb_excluirClick(Sender: TObject);
-var
-  LMessage: String;
 begin
-  LMessage:= 'Tem certeza que deseja excluir ' + QryDependentesnome.AsString+ '?';
-  if Application.MessageBox(PChar(LMessage), 'Alerta',MB_ICONQUESTION + MB_YESNO + MB_SYSTEMMODAL) = mrYes then
+  if Application.MessageBox(PChar('Tem certeza que deseja excluir ' + QryDependentesnome.AsString+ '?'), 'Alerta',MB_ICONQUESTION + MB_YESNO + MB_SYSTEMMODAL) = mrYes then
   begin
     TUtil.excluirDependentes(QryDependentesid_dependente.AsInteger);
     QryDependentes.Refresh;
