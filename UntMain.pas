@@ -9,11 +9,11 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, Vcl.Buttons, Vcl.ToolWin, Vcl.ActnMan, Vcl.ActnCtrls,
-  Vcl.ActnMenus;
+  Vcl.ActnMenus, Vcl.StdCtrls;
 
 type
   TFrmMain = class(TForm)
-    DBGrid1: TDBGrid;
+    DbgDados: TDBGrid;
     QryDados: TFDQuery;
     DscDados: TDataSource;
     QryDadosid_funcionario: TIntegerField;
@@ -28,7 +28,7 @@ type
     sb_editar: TSpeedButton;
     sp_exporta_todos: TSpeedButton;
     sp_exportar_selecionado: TSpeedButton;
-    SpeedButton5: TSpeedButton;
+    sp_sorteador: TSpeedButton;
     SaveDialog1: TSaveDialog;
     procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -37,8 +37,11 @@ type
     procedure SpeedButton3Click(Sender: TObject);
     procedure sp_exporta_todosClick(Sender: TObject);
     procedure sp_exportar_selecionadoClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure sp_sorteadorClick(Sender: TObject);
   private
-
+    function maiorIdFuncionario: Integer;
+    function validarGanhador(AIdGanhador: integer): String;
   public
     { Public declarations }
   end;
@@ -52,6 +55,19 @@ implementation
  uses
    untDtm, UntFuncionario, UntDependente, UntUtil;
 
+procedure TFrmMain.Button1Click(Sender: TObject);
+begin
+  with QryDados do
+  begin
+    First;
+    while not eof do
+    begin
+      Next;
+    end;
+  end;
+
+end;
+
 procedure TFrmMain.FormShow(Sender: TObject);
 begin
   with QryDados do
@@ -59,6 +75,26 @@ begin
     Close;
     Open;
   end;
+end;
+
+function TFrmMain.maiorIdFuncionario: Integer;
+var
+  LMaiorId: integer;
+begin
+  LMaiorId:= 0;
+  with QryDados do
+  begin
+    First;
+    while not eof do
+    begin
+      if fieldByName('id_funcionario').asinteger > LMaiorId then
+      begin
+        LMaiorId:= fieldByName('id_funcionario').asinteger;
+      end;
+      Next;
+    end;
+  end;
+  Result:= LMaiorId;
 end;
 
 procedure TFrmMain.sb_adicionarClick(Sender: TObject);
@@ -173,6 +209,43 @@ begin
     end;
   end;
 
+end;
+
+procedure TFrmMain.sp_sorteadorClick(Sender: TObject);
+var
+  LIdGanhador: integer;
+  LNomeGanhador: string;
+  LSortear: Boolean;
+begin
+  Randomize;
+  LSortear:= True;
+  while LSortear do
+  begin
+    LIdGanhador:= Random(maiorIdFuncionario+1);
+    LNomeGanhador:= validarGanhador(LIdGanhador);
+    if LNomeGanhador <> '' then
+    begin
+     showmessage('Sorteado foi: ' + LNomeGanhador);
+     LSortear:= False;
+    end;
+  end;
+end;
+
+function TFrmMain.validarGanhador(AIdGanhador: integer): String;
+begin
+  Result:='';
+  with QryDados do
+  begin
+  First;
+    while not eof do
+    begin
+      if fieldByName('id_funcionario').asinteger = AIdGanhador then
+      begin
+        Result:= fieldByName('nome').asstring;
+      end;
+      Next;
+    end;
+  end;
 end;
 
 end.

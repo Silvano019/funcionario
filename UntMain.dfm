@@ -1393,7 +1393,7 @@ object FrmMain: TFrmMain
     ShowHint = True
     OnClick = sp_exportar_selecionadoClick
   end
-  object SpeedButton5: TSpeedButton
+  object sp_sorteador: TSpeedButton
     Left = 1031
     Top = 338
     Width = 73
@@ -1788,8 +1788,9 @@ object FrmMain: TFrmMain
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     ParentShowHint = False
     ShowHint = True
+    OnClick = sp_sorteadorClick
   end
-  object DBGrid1: TDBGrid
+  object DbgDados: TDBGrid
     Left = 8
     Top = 8
     Width = 1017
@@ -1801,7 +1802,7 @@ object FrmMain: TFrmMain
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
-    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect]
     ParentFont = False
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
