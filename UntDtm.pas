@@ -11,7 +11,7 @@ uses
 type
   TDtm = class(TDataModule)
     conexao: TFDConnection;
-    FDPhysPgDriverLink1: TFDPhysPgDriverLink;
+    FDPhysPgDriverLink: TFDPhysPgDriverLink;
   private
     { Private declarations }
   public

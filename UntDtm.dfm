@@ -12,7 +12,7 @@ object Dtm: TDtm
     Left = 48
     Top = 40
   end
-  object FDPhysPgDriverLink1: TFDPhysPgDriverLink
+  object FDPhysPgDriverLink: TFDPhysPgDriverLink
     VendorLib = 'C:\Program Files (x86)\PostgreSQL\10\bin\libpq.dll'
     Left = 144
     Top = 40
