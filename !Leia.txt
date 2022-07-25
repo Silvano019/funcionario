@@ -2,8 +2,8 @@ Para rodar o projeto:
 
 1. Abrir o projeto no Delphi.
 
-2. Certificar, se a propriedade: 'VendorLib', do componente linkDrive que esta dentro do arquivo UntDtm.dfm, indica corretamento o caminho da dll libpq.dll.
+2. Certificar, se a propriedade: 'VendorLib', do componente linkDrive que esta dentro do arquivo UntDtm.dfm, indica corretamente o caminho da dll libpq.dll.
 
-3. Importar o bd que esta na pasta backup_bd, e caso o postgresql esteja rodando em uma porta diferenre da padrão(5432), é necessáiro alterar para a porta correta na propiedade: 'port' do componente conexao, que esta dentro UntDtm.dfm. Para alterar basta dar dois cliks em cima do componente.
+3. Importar o bd que esta na pasta backup_bd. Caso o postgresql esteja rodando em uma porta diferenre da padrão(5432), é necessáiro alterar a porta na propiedade: 'port' do componente conexao, que esta dentro UntDtm.dfm. Para alterar basta dar dois cliks em cima do componente.
 
 
